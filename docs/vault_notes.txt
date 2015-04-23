@@ -2,8 +2,19 @@ vault notes
 ============
 
 
+Requirements
+------------
+
+- list files in vault
+- get latest zip file from vault
+- extract latest file in datatase load directory
+- clean up
+- get specific file from vault
+
+
+
 
 Process...
 -----------
 
-(1)
+(1) get list of zip files from vault
