@@ -15,13 +15,8 @@ import click
 
 
 
-
-
-
-
-
 def main():
-    """Main entry point for the script."""
+    """tool to extract data from secure sftp data vaults"""
     
     # (1) read cli inputs
 
