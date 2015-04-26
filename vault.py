@@ -14,11 +14,18 @@ import click
 
 
 
+ @click.command()
+ @click
 
-def main():
-    """tool to extract data from secure sftp data vaults"""
+
+def vault():
+    """tool to extract files from secure sftp data vaults"""
     
     # (1) read cli inputs
+    
+
+     
+   
 
     # (2) read config file... user, key, server
 
@@ -31,4 +38,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    vault()
