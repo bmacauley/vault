@@ -11,10 +11,22 @@ Requirements
 - clean up
 - get specific file from vault
 
+Reference
+----------
+xp_cmdshell - documentation
+https://msdn.microsoft.com/en-gb/library/ms175046.aspx
+
 
 
 
 Process...
 -----------
 
-(1) get list of zip files from vault
+(1) read config file
+    - user
+    - key
+    - vault_ip
+    - vault_dir 
+    - data_dir
+
+(2) get list of zip files from vault

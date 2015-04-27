@@ -14,14 +14,18 @@ import click
 
 
 
- @click.command()
- @click
+
+
+
+@click.command()
+ 
 
 
 def vault():
     """tool to extract files from secure sftp data vaults"""
     
     # (1) read cli inputs
+    # 
     
 
      
