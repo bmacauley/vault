@@ -24,9 +24,6 @@ outputdir=''
 
 
 
-
-
-
 @click.group()
 @click.option('--config', '-c', multiple=True, nargs=1, help='config file')
 @click.option('--host', '-h', multiple=True, nargs=1, help='vault hostname/ip address')
@@ -37,7 +34,9 @@ outputdir=''
 def vault(config, host, user, key, vaultdir, outputdir):
     """tool to extract files from a secure sftp data vault"""
     
+
     # load config file 
+
     
     # vaultconfig = load_config()
 
