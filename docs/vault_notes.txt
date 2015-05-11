@@ -5,11 +5,30 @@ vault notes
 Requirements
 ------------
 
+- initialise vault program, create config file
 - list files in vault
 - get latest zip file from vault
 - extract latest file in datatase load directory
 - clean up
 - get specific file from vault
+
+
+
+$ python vault.py --help
+Usage: vault.py [OPTIONS]
+
+  tool to extract files from secure sftp data vaults
+
+Options:
+
+	
+  --count INTEGER  Number of greetings.
+  --name TEXT      The person to greet.
+  --help           Show this message and exit.
+
+
+
+
 
 
 

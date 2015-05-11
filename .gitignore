@@ -1,0 +1,4 @@
+vault.ini
+/.tags*
+/temp
+/ipython/.ipynb_checkpoints
