@@ -94,7 +94,6 @@ def list(files):
 @click.argument('files', nargs=1)
 def extract(files):
     """ extract vault file(s) """
-    click.echo('extract vault file(s)')
     if files == 'latest':
         vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
         latest = vault_files[0].filename
