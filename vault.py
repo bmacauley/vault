@@ -54,9 +54,6 @@ def vault():
         vaultdir = config.get('vault', 'vaultdir')
         outputdir = config.get('vault', 'outputdir')
         sftp_connect()
-    else:
-        click.echo('ERROR: missing config file')
- 
 
 
 @vault.command()
@@ -81,7 +78,6 @@ def init():
     cfgfile.close()
 
 
-
 @vault.command()
 @click.argument('files', nargs=1)
 def list(files): 
@@ -92,8 +88,6 @@ def list(files):
     elif files == 'latest':
         vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
         click.echo(vault_files[0].filename)
-
-
 
 
 @vault.command()
@@ -109,7 +103,7 @@ def extract(files):
         if zipfile.is_zipfile(outputfile):
             zip = zipfile.ZipFile(outputfile)
             zip.extractall(os.path.realpath(outputdir))
-
+            os.remove(outputfile)
 
 
 if __name__ == '__main__':
