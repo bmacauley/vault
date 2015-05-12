@@ -13,7 +13,7 @@ username=''
 key=''
 vaultdir=''
 outputdir=''
-
+sftp=''
 
 
 
@@ -22,26 +22,41 @@ outputdir=''
 
 # Functions
 
+def sftp_connect():
+    """ create an sftp connection to vault"""
+    global sftp
+    sftp = pysftp.Connection(hostname, 
+                                username=username, 
+                                private_key=key)
+    sftp.chdir(vaultdir)
+
+def mtime_key(file):
+    return file.st_mtime
 
 
 @click.group()
-@click.option('--config', '-c', multiple=True, nargs=1, help='config file')
-@click.option('--host', '-h', multiple=True, nargs=1, help='vault hostname/ip address')
-@click.option('--user', '-u', multiple=True, nargs=1, help='vault username')
-@click.option('--key', '-k', multiple=True, help='vault private key')
-@click.option('--vaultdir', '-v', multiple=True, nargs=1, default='vault', help='vault directory')
-@click.option('--outputdir', '-o', multiple=True, nargs=1, default='.', help='output directory')
-def vault(config, host, user, key, vaultdir, outputdir):
+def vault():
     """tool to extract files from a secure sftp data vault"""
     
+    global hostname
+    global username
+    global key
+    global vaultdir
+    global outputdir
 
     # load config file 
-
-    
-    # vaultconfig = load_config()
-
-
-    # (3) program
+    if os.path.exists(os.getcwd() + '/vault.ini'):
+        config = ConfigParser.ConfigParser()
+        config.read(os.getcwd() + '/vault.ini')
+        hostname = config.get('vault', 'hostname')
+        username = config.get('vault', 'username')
+        key = config.get('vault', 'key')
+        vaultdir = config.get('vault', 'vaultdir')
+        outputdir = config.get('vault', 'outputdir')
+        sftp_connect()
+    else:
+        click.echo('ERROR: missing config file')
+ 
 
 
 @vault.command()
@@ -71,7 +86,14 @@ def init():
 @click.argument('files', nargs=1)
 def list(files): 
     """ list vault files """
-    click.echo('list vault files')
+    if files == 'all':
+        for file in sftp.listdir():
+            click.echo(file)
+    elif files == 'latest':
+        vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
+        click.echo(vault_files[0].filename)
+
+
 
 
 @vault.command()
@@ -79,11 +101,14 @@ def list(files):
 def extract(files):
     """ extract vault file(s) """
     click.echo('extract vault file(s)')
-
-
-
-
-
+    if files == 'latest':
+        vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
+        latest = vault_files[0].filename
+        outputfile=os.path.realpath(outputdir) + '/' + latest 
+        sftp.get(latest, localpath=outputfile, preserve_mtime=True)
+        if zipfile.is_zipfile(outputfile):
+            zip = zipfile.ZipFile(outputfile)
+            zip.extractall(os.path.realpath(outputdir))
 
 
 
