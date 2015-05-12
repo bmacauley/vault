@@ -2,3 +2,7 @@ vault.ini
 /.tags*
 /temp
 /ipython/.ipynb_checkpoints
+/build
+/dist
+/output
+/vault.spec
