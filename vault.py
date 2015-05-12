@@ -102,6 +102,7 @@ def extract(arg):
         if zipfile.is_zipfile(outputfile):
             zip = zipfile.ZipFile(outputfile)
             zip.extractall(os.path.realpath(outputdir))
+            zip.close()
             os.remove(outputfile)
 
 
