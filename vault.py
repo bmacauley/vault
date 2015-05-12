@@ -79,22 +79,22 @@ def init():
 
 
 @vault.command()
-@click.argument('files', nargs=1)
-def list(files): 
+@click.argument('arg', nargs=1)
+def list(arg): 
     """ list vault files """
-    if files == 'all':
+    if arg == 'all':
         for file in sftp.listdir():
             click.echo(file)
-    elif files == 'latest':
+    elif arg == 'latest':
         vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
         click.echo(vault_files[0].filename)
 
 
 @vault.command()
-@click.argument('files', nargs=1)
-def extract(files):
+@click.argument('arg', nargs=1)
+def extract(arg):
     """ extract vault file(s) """
-    if files == 'latest':
+    if arg == 'latest':
         vault_files = sorted(sftp.listdir_attr(), key=mtime_key, reverse=True)
         latest = vault_files[0].filename
         outputfile=os.path.realpath(outputdir) + '/' + latest 
